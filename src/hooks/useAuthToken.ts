@@ -4,13 +4,19 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const TOKEN_KEY = "authToken";
+enum Role {
+  ADMIN = "ADMIN",
+  USER = "USER",
+  SUPER_ADMIN = "SUPER_ADMIN",
+  SECURITY = "SECURITY",
+}
 interface DecodedToken {
   id: string;
   first_name: string;
   last_name: string;
   middle_name: string;
   email: string;
-  role: string;
+  role: Role;
   iat: number;
   exp: number;
 }

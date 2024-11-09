@@ -9,16 +9,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthToken } from "@/hooks/useAuthToken";
 import { Apps } from "@mui/icons-material";
-import { Building2, LogIn, LogOut, ScanBarcode, Users } from "lucide-react";
+import { LogIn, LogOut, ScanBarcode } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function TopNav() {
-  const { token, removeToken } = useAuthToken();
+  const { token, removeToken, getDecodeToken } = useAuthToken();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     removeToken();
     navigate("/login");
+  };
+
+  const dashboard = () => {
+    if (getDecodeToken()?.role === "SECURITY") return "/security/dashboard";
+    if (getDecodeToken()?.role === "USER") return "/user/dashboard";
+    if (getDecodeToken()?.role === "ADMIN") return "/super_admin/dashboard";
+    if (getDecodeToken()?.role === "SUPER_ADMIN")
+      return "/super_admin/dashboard";
+    return "/dashboard";
   };
 
   return (
@@ -34,18 +43,24 @@ export default function TopNav() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <DropdownMenuItem>
-                <Users className="mr-2 h-4 w-4" />
-                <span className="text-xs font-bold">
-                  Create Your Own Organization
-                </span>
+                <Link to="/qr_code" className="flex items-center gap-2">
+                  <ScanBarcode className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-bold text-primary">
+                    Show QR
+                  </span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Building2 className="mr-2 h-4 w-4" />
-                <span className="text-xs font-bold">Create New Department</span>
+                <Link to={dashboard()} className="flex items-center gap-2">
+                  <ScanBarcode className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-bold text-primary">
+                    Dashboard
+                  </span>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <h2 className="text-lg font-bold text-primary">RMTFT</h2>
+          <h2 className="text-lg font-bold text-primary">ESM</h2>
         </div>
         {token ? (
           <>
@@ -53,10 +68,6 @@ export default function TopNav() {
               <LogOut className="h-5 w-5 text-primary" />
               <span className="sr-only">Logout</span>
             </Button>
-            <Link to="/qr_code" className="flex items-center gap-2">
-              <ScanBarcode className="h-5 w-5 text-primary" />
-              <span className="text-sm font-bold text-primary">Show QR</span>
-            </Link>
           </>
         ) : (
           <Link to="/login" className="flex items-center gap-2">
