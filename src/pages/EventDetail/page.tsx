@@ -6,6 +6,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import CheckPointForm from "./_components/check_point_form";
 import EventCard from "./_components/event_card";
+import RegisteredUsersChart from "./_components/registered_chart";
 import SecurityAssignmentForm from "./_components/security_form";
 
 interface CheckPoint {
@@ -112,6 +113,7 @@ export default function EventDetail() {
         </div>
       </div>
       <EventCard event={event} />
+      <RegisteredUsersChart eventId={event.id} />
       <div className="mt-4">
         <h3 className="text-xl font-semibold">Checkpoints</h3>
         <ul className="list-disc list-inside">

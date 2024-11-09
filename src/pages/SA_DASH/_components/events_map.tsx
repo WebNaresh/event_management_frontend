@@ -1,10 +1,12 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -65,7 +67,7 @@ export default function EVENT_LIST() {
     return (
       <div className="">
         {[...Array(3)].map((_, index) => (
-          <Card key={index} className="w-[300px] h-[300px]">
+          <Card key={index} className="w-[300px] h-[250px]">
             <CardHeader>
               <Skeleton className="h-4 w-2/3" />
             </CardHeader>
@@ -94,7 +96,7 @@ export default function EVENT_LIST() {
   return (
     <div className="flex flex-wrap gap-8">
       {data?.data.map((event) => (
-        <Card key={event.id} className="w-[300px] h-[300px]">
+        <Card key={event.id} className="w-[250px] h-auto">
           <Link to={`/event/${event.id}`} key={event.id}>
             <CardHeader>
               <CardTitle>{event.title}</CardTitle>
@@ -110,13 +112,10 @@ export default function EVENT_LIST() {
               <MapPinIcon className="h-4 w-4" />
               <span>{event.location}</span>
             </div>
-            <button
-              onClick={() => mutation.mutate(event?.id)}
-              className="mt-4 text-red-500"
-            >
-              Delete
-            </button>
           </CardContent>
+          <CardFooter>
+            <Button onClick={() => mutation.mutate(event?.id)}>Delete</Button>
+          </CardFooter>
         </Card>
       ))}
     </div>
