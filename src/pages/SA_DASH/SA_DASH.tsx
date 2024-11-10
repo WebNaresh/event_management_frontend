@@ -11,7 +11,6 @@ import AddSecurityPersonModal from "./_components/security_dilog";
 
 const SA_DASH: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isSecurityModalOpen, setIsSecurityModalOpen] = React.useState(false);
   const { token, getDecodeToken } = useAuthToken();
   const queryClient = useQueryClient();
 
@@ -46,32 +45,6 @@ const SA_DASH: React.FC = () => {
       });
     }
   }
-  async function handleSecurityFormSubmit(values: any) {
-    try {
-      // const userId = getDecodeToken()?.id;
-      const response = await axios.post(
-        "/security",
-        {
-          ...values,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast({
-        title: "Security Person Added",
-        description: "Name: " + response.data.name,
-      });
-      setIsSecurityModalOpen(false);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was an error adding the security person.",
-      });
-    }
-  }
 
   return (
     <div className="container flex flex-col gap-4">
@@ -83,11 +56,7 @@ const SA_DASH: React.FC = () => {
             setIsModalOpen={setIsModalOpen}
             handleFormSubmit={handleFormSubmit}
           />
-          <AddSecurityPersonModal
-            isModalOpen={isSecurityModalOpen}
-            setIsModalOpen={setIsSecurityModalOpen}
-            handleFormSubmit={handleSecurityFormSubmit}
-          />
+          <AddSecurityPersonModal />
         </div>
       </div>
       <EVENT_LIST />

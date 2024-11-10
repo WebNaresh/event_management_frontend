@@ -4,6 +4,8 @@ import CheckPoints from "./pages/CheckPoints/page";
 import EventDetail from "./pages/EventDetail/page";
 import Login from "./pages/Login/Login";
 import QRCodePage from "./pages/QR_CODE/page";
+import RegisteredUsersPage from "./pages/RegisteredUser/page";
+import RegisteredSecurityPage from "./pages/RegistredSecurity/page";
 import SA_DASH from "./pages/SA_DASH/SA_DASH";
 import SECURITY_ADMIN_PANEL from "./pages/SEC_DASH/page";
 import SignupForm from "./pages/SignUp/page";
@@ -24,6 +26,14 @@ const App = () => {
         element={<SingleCheckPoint />}
       />
       <Route path="/event/:event_id" element={<EventDetail />} />
+      <Route
+        path="/event/:event_id/registered-users"
+        element={<RegisteredUsersPage />}
+      />
+      <Route
+        path="/event/:event_id/registered-security"
+        element={<RegisteredSecurityPage />}
+      />
       <Route path="/qr_code" element={<QRCodePage />} />
     </Routes>
   );

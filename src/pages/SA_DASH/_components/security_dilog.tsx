@@ -7,19 +7,43 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
+import { useAuthToken } from "@/hooks/useAuthToken";
+import axios from "axios";
+import React from "react";
 import EventAddForm from "./security_form";
 
-interface DashboardDialogProps {
-  isModalOpen: boolean;
-  setIsModalOpen: (isOpen: boolean) => void;
-  handleFormSubmit: (values: any) => void;
-}
+interface DashboardDialogProps {}
 
-const AddSecurityPersonModal: React.FC<DashboardDialogProps> = ({
-  isModalOpen,
-  setIsModalOpen,
-  handleFormSubmit,
-}) => {
+const AddSecurityPersonModal: React.FC<DashboardDialogProps> = ({}) => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const { token } = useAuthToken();
+  async function handleFormSubmit(values: any) {
+    try {
+      // const userId = getDecodeToken()?.id;
+      const response = await axios.post(
+        "/security",
+        {
+          ...values,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Security Person Added",
+        description: "Name: " + response.data.name,
+      });
+      setIsModalOpen(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was an error adding the security person.",
+      });
+    }
+  }
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>

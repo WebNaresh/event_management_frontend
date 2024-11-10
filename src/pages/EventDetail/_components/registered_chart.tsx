@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import RadialChart from "./chart-map";
 
 interface RegisteredUser {
@@ -68,17 +69,27 @@ export default function RegisteredUsersChart({ eventId }: { eventId: string }) {
     );
   }
 
-  const registeredUserCount = data?.data.registered_user.length ?? 0;
-  const checkPointsCount = data?.data.checkPoints.length ?? 0;
-  const securityPersonCount = data?.data.security_person.length ?? 0;
+  const registeredUserCount = data?.data.registered_user?.length ?? 0;
+  const checkPointsCount = data?.data.checkPoints?.length ?? 0;
+  const securityPersonCount = data?.data.security_person?.length ?? 0;
 
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-semibold">Event Insights</h3>
       <div className="flex flex-wrap gap-8">
-        <RadialChart count={registeredUserCount} title="Registered Users" />
+        <Link to={`/event/${eventId}/registered-users`}>
+          <RadialChart
+            count={registeredUserCount}
+            title="Total Registered Users"
+          />
+        </Link>
         <RadialChart count={checkPointsCount} title="Total CheckPoints" />
-        <RadialChart count={securityPersonCount} title="Total Security Guard" />
+        <Link to={`/event/${eventId}/registered-security`}>
+          <RadialChart
+            count={securityPersonCount}
+            title="Total Security Guard"
+          />
+        </Link>
       </div>
     </div>
   );
