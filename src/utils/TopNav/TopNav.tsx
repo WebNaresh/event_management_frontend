@@ -8,8 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuthToken } from "@/hooks/useAuthToken";
-import { Apps } from "@mui/icons-material";
-import { LogIn, LogOut, ScanBarcode } from "lucide-react";
+import { Apps, Dashboard } from "@mui/icons-material";
+import { Home, LogIn, LogOut, ScanBarcode } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function TopNav() {
@@ -52,8 +52,14 @@ export default function TopNav() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
+                  <Link to="/" className="flex items-center gap-2">
+                    <Home className="h-5 w-5 text-primary" />
+                    <span className="text-sm font-bold text-primary">Home</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
                   <Link to={dashboard()} className="flex items-center gap-2">
-                    <ScanBarcode className="h-5 w-5 text-primary" />
+                    <Dashboard className="h-5 w-5 text-primary" />
                     <span className="text-sm font-bold text-primary">
                       Dashboard
                     </span>
