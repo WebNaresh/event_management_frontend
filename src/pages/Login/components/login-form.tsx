@@ -76,6 +76,8 @@ export default function LoginForm() {
         navigate("/super_admin/dashboard");
       } else if (data.role === "SECURITY") {
         navigate("/security/dashboard");
+      } else {
+        navigate("/user/dashboard")
       }
       // Handle successful login, e.g., redirect to dashboard
     },
